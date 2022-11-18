@@ -7,7 +7,7 @@ class Contenedor {
 
     getAll = async () => {
         try{
-            return items;
+            return this.items;
     } catch(error){
         console.log(error);
     }}
@@ -20,12 +20,13 @@ class Contenedor {
 
 
     save = async (title, price, thumbnail) => {
+        this.id++
         try {
             newItem = {
                 title:title,
                 price:price,
                 thumbnail:thumbnail,
-                id: id
+                id: this.id
             };
             this.items.push(newItem);
             return this.items

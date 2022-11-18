@@ -1,3 +1,4 @@
+import { io } from "socket.io-client";
 const socket = io.connect();
 
 
@@ -14,8 +15,15 @@ function addMessage() {
 }
 
 async function bringProducts(itemProduct) {
-    const itemList = await fetch('views/partials/Productos.ejs');
+    let html = ''
+    const itemList = await fetch('views/partials/Productos.ejs').then(res => res.text());
+    if (itemProduct.length != 0) {
+        html = ejs.render('itemList', itemProduct )
+    }else{
+        html = `No se encontraron productos`
+    }
     
+    document.getElementById('tabla').innerHTML = html 
 }
 
 async function addItem() {
@@ -49,4 +57,8 @@ function render(data) {
 
 socket.on('mensajes', function(data) {
     render(data);
+});
+
+socket.on("items", items => {
+    bringProducts(items);
 });

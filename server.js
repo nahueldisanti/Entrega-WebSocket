@@ -17,15 +17,16 @@ const io = new IOServer(httpServer);
 
 //Entregas anteriores
 app.use(express.json());
-app.use(express.urlencoded({ extended: false}));
+app.use(express.urlencoded({ extended: true}));
 app.use(myRoutes);
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('/public'));
 app.set('view engine', 'ejs');
 app.set('views','./public/views');
-app.use(myRoutes);
+
+const mensajes = [];
 
 //IO
-io.on('connection', socket => {
+io.on('connection', (socket) => {
     console.log('Nuevo cliente conectado!');
 
     //Mensajes
@@ -37,12 +38,13 @@ io.on('connection', socket => {
     });
 
     //Traemos los productos
-    const items = Contenedor.getAll()
-    socket.emit('productos', items);
+    const items = contenedor.getAll
+    socket.emit('items', items);
+    
     //Guardando productos
     socket.on('newItem', (newItem) => {
-        Contenedor.save(newItem)
-        io.sockets.emit('productos', items)
+        contenedor.save(newItem)
+        io.sockets.emit('items', items)
     });
 
     //Traemos el historial de mensajes
