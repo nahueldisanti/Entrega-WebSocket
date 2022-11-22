@@ -3,9 +3,11 @@ const express = require('express');
 const { Server: HttpServer} = require('http');
 const {Server: IOServer} = require('socket.io');
 const app = express();
+const Messeges = require('./Contenedor/historialDeMensajes.js')
 const Contenedor = require('./Contenedor/index.js');
 const routerProd = express.Router();
 const contenedor = new Contenedor();
+const historial = new Messeges()
 const PORT = 8080;
 const myRoutes = routerProd.get('/', (req, res) => {
     res.render('index');
@@ -38,7 +40,7 @@ io.on('connection', (socket) => {
     });
 
     //Traemos los productos
-    const items = contenedor.getAll
+    const items = contenedor.getAll();
     socket.emit('items', items);
     
     //Guardando productos
@@ -48,8 +50,12 @@ io.on('connection', (socket) => {
     });
 
     //Traemos el historial de mensajes
-    socket.emit();
-    socket.on();
+    const messeges = historial.getMesseges();
+    socket.emit('messegesHistory', messeges);
+    socket.on('new-messegeses', (newMessege) => {
+        historial.saveMessege(newMessege)
+        io.sockets.emit('messages', newMessage)
+    } );
 });
 
 //Levantando el servidor

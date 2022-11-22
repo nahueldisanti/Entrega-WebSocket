@@ -30,3 +30,5 @@ class Messeges {
             console.log(error);
     }}
 }
+
+module.exports = Messeges;

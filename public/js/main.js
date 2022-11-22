@@ -5,12 +5,11 @@ const socket = io.connect();
 function addMessage() {
     const mensaje = document.getElementById('mensajes').value;
     const correo = document.getElementById('correo').value;
-
     const newMessage = {
         correo: correo, 
         mensaje: mensaje
     }
-    socket.emit('new-message', newMessage);
+    socket.emit('new-messege', newMessage);
     return false;
 }
 
@@ -40,7 +39,7 @@ async function addItem() {
     return false;
 }
 
-function render(data) {
+function renderMesseges(data) {
 
     const html = data.map((elem, index) => {
         return (`
@@ -55,8 +54,8 @@ function render(data) {
     document.getElementById('messeges').innerHTML = html;
 }
 
-socket.on('mensajes', function(data) {
-    render(data);
+socket.on('mensajes', data => {
+    renderMesseges(data);
 });
 
 socket.on("items", items => {
