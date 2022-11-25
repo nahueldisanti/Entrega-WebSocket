@@ -1,7 +1,7 @@
 <h1>Ingresar datos</h1>
 <br>
 
-<form onsubmit="addItem(this)" action="/items" method="post" name="items">
+<form id="productForm" name="items">
 
     <div class="form-group">
         <label for="nombre"><b>Nombre</b></label>
@@ -15,6 +15,6 @@
         <label for="edad"><b>Imagen</b></label>
         <input type="number" id="thumbnail" name="thumbnail" class="form-control">
     </div>
-    <button class="btn btn-warning">Enviar</button>
+    <button class="btn btn-warning" type="button" id="btn">Enviar</button>
 
 </form>

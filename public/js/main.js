@@ -24,20 +24,20 @@ async function bringProducts(itemProduct) {
     
     document.getElementById('tabla').innerHTML = html 
 }
+document.getElementById('btn').addEventListener('click', () => {
+        const title = document.getElementById('nombre').value;
+        const price = document.getElementById('price').value;
+        const thumbnail = document.getElementById('thumbnail').value;
 
-async function addItem() {
-    const title = document.getElementById('nombre').value;
-    const price = document.getElementById('price').value;
-    const thumbnail = document.getElementById('thumbnail').value;
-
-    const newItem = {
-        title: title,
-        price: price,
-        thumbnail: thumbnail
-    }
+        const newItem = {
+            title: title,
+            price: price,
+            thumbnail: thumbnail
+        }
     socket.emit('newItem', newItem);
-    return false;
-}
+    })
+
+
 
 function renderMesseges(data) {
 
@@ -52,7 +52,12 @@ function renderMesseges(data) {
     }).join('');
 
     document.getElementById('messeges').innerHTML = html;
+
 }
+document.getElementById('chatForm').addEventListener('submit', (e) => {
+    e.preventDefault()
+    addMessage()
+})
 
 socket.on('mensajes', data => {
     renderMesseges(data);
